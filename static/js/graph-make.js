@@ -5,7 +5,7 @@ var margin = {top: 20, right: 20, bottom: 60, left: 50},
 var people = [
   { 'name':'John', 
     'index':0,
-    'party':'Democrat'
+    'party':'moea'
   },
     { 'name':'Kenneth', 
     'index':1,
@@ -22,6 +22,16 @@ var links = [
     'source':0,
     'target':1,
     'value' :12
+  },
+  {
+    'source':1,
+    'target':2,
+    'value' :12
+  },
+  {
+    'source':0,
+    'target':2,
+    'value' :12
   }
 ]
 
@@ -33,7 +43,29 @@ var svg = d3.select("#chart")
   .attr("width", width)
   .attr("height", height);
 
-for (link in links)
-var rect = svg.append("rect")
-  .attr("width", cellWidth)
-  .attr("height", cellHeight);
+for (var i=0; i < links.length; i++){
+  //Basic selection of "link"
+  var link = links[i];
+  console.log(link);
+
+  //Making the Rectangle itself
+  var rect = svg.append("rect")
+    .attr("width", cellWidth)
+    .attr("height", cellHeight);
+
+  //Grid Positioning
+  var gridHorizPosition = (link.source) * cellWidth;
+  var gridVertPosition = (link.target) * cellHeight;
+  rect.attr("x",gridHorizPosition);
+  rect.attr("y",gridVertPosition);
+
+  //Giving the Rectangle Color
+  var colorBefore = "#f5f5f5";
+  if (people[link.source].party == "Republican"){
+    colorBefore = "#800000";
+  }
+  else if (people[link.source].party == "Democrat"){
+    colorBefore = "#003399";
+  }
+  rect.style("fill",colorBefore);
+}
