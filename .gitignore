@@ -58,6 +58,6 @@ target/
 
 # Added by JG
 .DS_Store
-config.py
+db_config.py
 
 accessmo/accessmo/crap.html
