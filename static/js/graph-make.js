@@ -21,47 +21,47 @@ var links = [
   {
     'source':0,
     'target':1,
-    'value' :12
+    'shared_vote_count' :12
   },
   {
     'source':1,
     'target':2,
-    'value' :20
+    'shared_vote_count' :20
   },
   {
     'source':0,
     'target':2,
-    'value' :30
+    'shared_vote_count' :30
   },
   {
     'source':1,
     'target':0,
-    'value' :2
+    'shared_vote_count' :2
   },
   {
     'source':2,
     'target':1,
-    'value' :2
+    'shared_vote_count' :2
   },
   {
     'source':0,
     'target':0,
-    'value' :2
+    'shared_vote_count' :2
   },
   {
     'source':1,
     'target':1,
-    'value' :22
+    'shared_vote_count' :22
   },
   {
     'source':2,
     'target':2,
-    'value' :27
+    'shared_vote_count' :27
   },
   {
     'source':2,
     'target':0,
-    'value' :16
+    'shared_vote_count' :16
   }
 ]
 
@@ -76,8 +76,8 @@ var svg = d3.select("#chart")
 //The FIRST for loop overlinks, to find maxRelationship for scaling purposes
 var maxRelationship = 0;
 for (var i=0; i < links.length; i++){
-  if (links[i].value > maxRelationship){
-    maxRelationship = links[i].value;
+  if (links[i].shared_vote_count > maxRelationship){
+    maxRelationship = links[i].shared_vote_count;
   }
 }
 
@@ -106,15 +106,15 @@ for (var i=0; i < links.length; i++){
   rect.classed(link.source + "x" + link.target,true);
 
   //Giving the Rectangle Color
-  var colorBefore = "rgba(200, 200, 200, " + link.value/maxRelationship + ")";
+  var colorBefore = "rgba(200, 200, 200, " + link.shared_vote_count/maxRelationship + ")";
   if (people[link.source].party == "Republican"){
     if (people[link.target].party == "Republican"){
-        colorBefore = "rgba(128, 0, 0, " + link.value/maxRelationship + ")";
+        colorBefore = "rgba(128, 0, 0, " + link.shared_vote_count/maxRelationship + ")";
     }
   }
   else if (people[link.source].party == "Democrat"){
     if (people[link.target].party == "Democrat"){
-       colorBefore = "rgba(0, 51, 153," + link.value/maxRelationship + ")";
+       colorBefore = "rgba(0, 51, 153," + link.shared_vote_count/maxRelationship + ")";
     }
   }
   rect.style("fill",colorBefore);
