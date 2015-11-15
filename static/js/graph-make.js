@@ -1,11 +1,11 @@
 var margin = {top: 20, right: 20, bottom: 60, left: 50},
-    width = 1000 - margin.left - margin.right,
+    width = 800 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
 
 var people = [
   { 'name':'John', 
     'index':0,
-    'party':'moea'
+    'party':'Republican'
   },
     { 'name':'Kenneth', 
     'index':1,
@@ -26,12 +26,42 @@ var links = [
   {
     'source':1,
     'target':2,
-    'value' :12
+    'value' :20
   },
   {
     'source':0,
     'target':2,
-    'value' :12
+    'value' :30
+  },
+  {
+    'source':1,
+    'target':0,
+    'value' :2
+  },
+  {
+    'source':2,
+    'target':1,
+    'value' :2
+  },
+  {
+    'source':0,
+    'target':0,
+    'value' :2
+  },
+  {
+    'source':1,
+    'target':1,
+    'value' :22
+  },
+  {
+    'source':2,
+    'target':2,
+    'value' :27
+  },
+  {
+    'source':2,
+    'target':0,
+    'value' :16
   }
 ]
 
@@ -43,6 +73,15 @@ var svg = d3.select("#chart")
   .attr("width", width)
   .attr("height", height);
 
+//The FIRST for loop overlinks, to find maxRelationship for scaling purposes
+var maxRelationship = 0;
+for (var i=0; i < links.length; i++){
+  if (links[i].value > maxRelationship){
+    maxRelationship = links[i].value;
+  }
+}
+
+//The SECOND for loop over links, this time to actually build things.
 for (var i=0; i < links.length; i++){
   //Basic selection of "link"
   var link = links[i];
@@ -59,13 +98,25 @@ for (var i=0; i < links.length; i++){
   rect.attr("x",gridHorizPosition);
   rect.attr("y",gridVertPosition);
 
+  //Alt Text
+  rect.attr("data-hover-text", people[link.source].name + " & " + people[link.target].name);
+
+  //Give the rect jQuery-targetable class
+  rect.classed("grid-rect",true);
+  rect.classed(link.source + "x" + link.target,true);
+
   //Giving the Rectangle Color
-  var colorBefore = "#f5f5f5";
+  var colorBefore = "rgba(200, 200, 200, " + link.value/maxRelationship + ")";
   if (people[link.source].party == "Republican"){
-    colorBefore = "#800000";
+    if (people[link.target].party == "Republican"){
+        colorBefore = "rgba(128, 0, 0, " + link.value/maxRelationship + ")";
+    }
   }
   else if (people[link.source].party == "Democrat"){
-    colorBefore = "#003399";
+    if (people[link.target].party == "Democrat"){
+       colorBefore = "rgba(0, 51, 153," + link.value/maxRelationship + ")";
+    }
   }
   rect.style("fill",colorBefore);
+  var colorAfter = "#f5f5f5";
 }
