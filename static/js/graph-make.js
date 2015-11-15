@@ -99,7 +99,7 @@ for (var i=0; i < links.length; i++){
   rect.attr("y",gridVertPosition);
 
   //Alt Text
-  rect.attr("data-hover-text", people[link.source].name + " & " + people[link.target].name);
+  rect.attr("data-hover-text", people[link.source].name + " (" + people[link.source].party + ")" + " & " + people[link.target].name + " (" + people[link.target].party + ")");
 
   //Give the rect jQuery-targetable class
   rect.classed("grid-rect",true);
